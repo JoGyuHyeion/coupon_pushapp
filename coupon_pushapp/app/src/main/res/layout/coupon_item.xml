@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/coupon_item"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/c_imageView"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_android" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="114dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical"
+        android:layout_weight="0.30">
+
+        <TextView
+            android:id="@+id/num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="num : "
+            android:textColor="#ff5805"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/c_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="id : "
+            android:textColor="#ff5805"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp">
+
+            <TextView
+                android:id="@+id/couponplace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="6dp"
+                android:text="이름 : "
+                android:textColor="#0223e0"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/writedate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="writedate : "
+                android:textColor="#4902d6"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/expireation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="expireation : "
+            android:textColor="#0223e0"
+            android:textSize="10dp" />
+    </LinearLayout>
+</LinearLayout>

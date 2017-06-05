@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress ALL -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/activity_mobile2"
+android:focusable="true"
+android:focusableInTouchMode="true"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#fff"
+android:orientation="vertical"
+android:theme="@style/AppTheme"
+tools:context="kr.innis.gyochon_gps_guide.MobileActivity2" >
+
+<fragment
+    android:id="@+id/map3"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    class="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@+id/editText3"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"></fragment>
+
+<Button
+    android:id="@+id/btnShowLocation3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/editText3"
+    android:layout_centerHorizontal="true"
+    android:text="@string/current_position"
+    android:textSize="18sp" />
+
+<EditText
+    android:id="@+id/editText3"
+    android:focusable="false"
+    android:clickable="false"
+    android:layout_width="wrap_content"
+    android:layout_height="100dp"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentStart="true"
+    android:background="@android:color/background_light"
+    android:inputType=""
+    android:scrollIndicators="right"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbars="vertical"
+    android:text="@string/position_log"
+    android:textSize="10sp"
+    tools:ignore="LabelFor,SmallSp"
+    tools:targetApi="m" />
+
+</RelativeLayout>

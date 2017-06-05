@@ -1,0 +1,238 @@
+package com.example.jo.pushapp.activity;
+
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.example.jo.pushapp.DbConnection.CouponTask;
+import com.example.jo.pushapp.ListView.CouponAdapter2;
+import com.example.jo.pushapp.ListView.Coupon_item;
+import com.example.jo.pushapp.R;
+import com.example.jo.pushapp.firebase.LoginData;
+
+import org.json.JSONException;
+
+import java.util.concurrent.ExecutionException;
+
+public class Client_modeActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
+    private  ListView allListview;
+    private  CouponAdapter2 adapter2;
+    private  LoginData loginData;
+    private   EditText editPlace;
+    private   EditText editContents;
+    // ImageView imageview;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        setContentView(R.layout.clientactivity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+//////로그인 정보 받아오기
+        Intent intent = getIntent();
+        loginData = (LoginData) intent.getSerializableExtra("loginData");
+        Toast.makeText(Client_modeActivity.this, loginData.getEmail() + loginData.getName() + loginData.getPhotoUrl(), Toast.LENGTH_SHORT).show();
+
+        allListview = (ListView) findViewById(R.id.allListView);
+        adapter2 = new CouponAdapter2(this, loginData.getPhotoUrl());
+        Snackbar.make(allListview, "로그인 성공", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+
+
+        try {
+
+            String result = new CouponTask().execute(loginData.getEmail(), "", "", "", "", "", "", "", "C_unUsedAll").get();
+            //   String result = new Sin_InLoginTask().execute(loginData.getEmail(), "", "C_unUsedAll").get();
+            adapter2.buildArrayList(result);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        allListview.setAdapter(adapter2);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            allListview.setNestedScrollingEnabled(true);
+        }
+
+//////////////////////////////dialog
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View couponRistlayout = inflater.inflate(R.layout.coupon_regist, (ViewGroup) findViewById(R.id.coupon_regist));
+        editPlace = ((EditText) couponRistlayout.findViewById(R.id.place));
+        editContents = (EditText) couponRistlayout.findViewById(R.id.contents);
+        /////////////////////////
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        allListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final Coupon_item item = (Coupon_item) adapter2.getItem(position);
+                new AlertDialog.Builder(Client_modeActivity.this)
+                        .setMessage(item.getPlace() + "의\n\n쿠폰번호 :" + item.getNum() + "\n\n내용 : " + item.getContents() + "\n\n쿠폰을 사용 하시겠습니까?")
+                        .setPositiveButton("사용", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    Log.d("쿠폰 번호확인", item.getNum());
+                                    //  String result = new UseCouponTask().execute(loginData.getEmail(), item.getPlace(), item.getNum(), item.getExpireation(), "C_use").get();
+                                    String result = new CouponTask().execute(loginData.getEmail(), "", item.getPlace(), item.getNum(), "", "", item.getExpireation(), "", "C_use").get();
+                                    if (result.equals("ok")) {
+                                        Snackbar.make(allListview, "쿠폰 사용 되었습니다.", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
+                                        // result = new Sin_InLoginTask().execute(loginData.getEmail(), "", "C_unUsedAll").get();
+                                        result = new CouponTask().execute(loginData.getEmail(), "", "", "", "", "", "", "", "C_unUsedAll").get();
+                                        adapter2.buildArrayList(result);
+                                        adapter2.notifyDataSetChanged();
+                                    } else if (result.equals("false")) {
+                                        Snackbar.make(allListview, "사용 불가능한 쿠폰입니다.", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
+                                    }
+                                } catch (Exception e) {
+                                }
+                            }
+                        })
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // not thing..
+                            }
+                        }).show();
+            }
+        });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+         /*   Snackbar.make(allListview, "앱을 종료하시겠습니까?", Snackbar.LENGTH_LONG).setAction("종료", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            }).show();*/
+            super.onBackPressed();
+        }
+    }
+
+    public MenuItem searchItem;
+    public SearchView searchView;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("검색");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Snackbar.make(allListview, searchView.getQuery().toString() + " : 검색 완료", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                try {
+                    String result = new CouponTask().execute("", "", searchView.getQuery().toString(), "", "", "", "", "", "c_search").get();
+                    //String result = new UseCouponTask().execute("", searchView.getQuery().toString(), "", "", "c_search").get();
+                    adapter2.buildArrayList(result);
+                    adapter2.notifyDataSetChanged();
+                } catch (Exception e) {
+                }
+                return false;
+            }
+        });
+        return true;
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        //    FragmentManager manager = getFragmentManager();
+
+        if (id == R.id.Client_Map) {
+            getWindow().setExitTransition(new Explode());
+            Intent intent = new Intent(Client_modeActivity.this, MapActivity.class);
+            intent.putExtra("loginData", loginData);
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            //   startActivity(intent);
+        } else if (id == R.id.Client_list) {
+            getWindow().setExitTransition(new Explode());
+            // Handle the camera action
+            Intent intent = new Intent(Client_modeActivity.this, Used_list.class);
+            // LoginData loginData=new LoginData(user.getEmail(),user.getDisplayName(),loginpwd,String.valueOf(user.getPhotoUrl()));
+            intent.putExtra("loginData", loginData);
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            //   startActivity(intent);
+
+        } else if (id == R.id.Client_proximity) {
+            getWindow().setExitTransition(new Explode());
+            Intent intent = new Intent(Client_modeActivity.this, ProximityActivity.class);
+            intent.putExtra("loginData", loginData);
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            //   startActivity(intent);
+        } else if (id == R.id.Client_Chatting) {
+            getWindow().setExitTransition(new Explode());
+            Intent intent = new Intent(Client_modeActivity.this, ChatActivity.class);
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            //   startActivity(intent);
+
+        } else if (id == R.id.Client_Share2) {
+   /*         Intent intent = new Intent(ClientCouponMainActivity.this, ChatActivity.class);
+            startActivity(intent);*/
+
+        } else if (id == R.id.Client_Send3) {
+            // manager.beginTransaction().replace(R.id.content_main, new FirstLayout()).commit();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+}

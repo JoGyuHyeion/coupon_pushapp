@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.example.jo.pushapp"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    //FCM 사용을 위해 추가
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
+
+    //데이터 송신을 위해 추가     받는 기능 만 사용하려면 Volley라이브러리 사용할 필요 없다.
+    compile 'com.android.volley:volley:1.0.0'
+
+    //Realtime Database 활용
+    compile 'com.google.firebase:firebase-database:10.0.1'
+    testCompile 'junit:junit:4.12'
+
+    // Firebase
+    compile 'com.google.firebase:firebase-auth:10.0.1'
+    compile 'com.google.android.gms:play-services-auth:10.0.1'
+// Picasso
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    // Picasso 라이브러리는  이미지로딩에 사용될 라이브러리 입니다!
+//구글 맵 사용하기 위한 라이브러리
+    compile 'com.google.android.gms:play-services-maps:10.0.1'
+}
+//FCM 사용을 위해 추가
+apply plugin: 'com.google.gms.google-services'

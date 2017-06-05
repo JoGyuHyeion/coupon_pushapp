@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/User_Map"
+            android:icon="@drawable/map"
+            android:title="Map" />
+        <item
+            android:id="@+id/User_Search"
+            android:icon="@drawable/search"
+            android:title="Search" />
+
+        <item
+            android:id="@+id/User_Chatting"
+            android:icon="@drawable/chatting"
+            android:title="Chatting" />
+        <item
+            android:id="@+id/User_Client"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Client" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/User_Share2"
+                android:icon="@drawable/ic_menu_share"
+                android:title="None" />
+            <item
+                android:id="@+id/User_Send3"
+                android:icon="@drawable/ic_menu_send"
+                android:title="None" />
+        </menu>
+    </item>
+
+</menu>

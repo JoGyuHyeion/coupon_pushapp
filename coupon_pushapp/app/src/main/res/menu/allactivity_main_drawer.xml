@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/ALL_Map"
+            android:icon="@drawable/map"
+            android:title="Map" />
+        <item
+            android:id="@+id/ALL_Gps_register"
+            android:icon="@drawable/gps"
+            android:title="Gps_register" />
+        <item
+            android:id="@+id/ALL_Search"
+            android:icon="@drawable/search"
+            android:title="Search" />
+        <item
+            android:id="@+id/ALL_list"
+            android:icon="@drawable/list"
+            android:title="list" />
+        <item
+            android:id="@+id/ALL_Chatting"
+            android:icon="@drawable/chatting"
+            android:title="Chatting" />
+        <item
+            android:id="@+id/ALL_client"
+            android:icon="@drawable/ic_menu_send"
+            android:title="ClientMode" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/ALL_Share2"
+                android:icon="@drawable/ic_menu_share"
+                android:title="None" />
+            <item
+                android:id="@+id/ALL_Send3"
+                android:icon="@drawable/ic_menu_send"
+                android:title="None" />
+        </menu>
+    </item>
+
+</menu>

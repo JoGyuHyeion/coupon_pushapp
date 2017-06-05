@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/coupon_regist"
+    android:orientation="vertical">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/place"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="place"
+            android:imeOptions="actionNext"
+            android:inputType="textAutoComplete"
+            android:textColor="#000"
+            android:textColorHint="#c9c9c9" />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/contents"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Coupon Contents"
+            android:textColor="#000"
+            android:textColorHint="#c9c9c9" />
+    </android.support.design.widget.TextInputLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.jo.pushapp">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!--uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--팝업 윈도우 퍼미션-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"></uses-permission>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.GoogleLogin"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity android:name=".activity.AllCouponMainActivity"></activity>
+        <activity android:name=".activity.UserCouponMainActivity"></activity>
+        <activity android:name=".activity.ClientCouponMainActivity"></activity>
+        <activity android:name=".activity.ChatActivity"></activity>
+        <activity android:name=".activity.GpsList"></activity>
+        <activity android:name=".activity.Search"></activity>
+        <activity android:name=".activity.GpsMainActivity"></activity>
+        <activity android:name=".activity.Used_list"></activity>
+        <activity android:name=".activity.ProximityActivity"></activity>
+        <activity android:name=".activity.FindCouponActivity"></activity>
+        <activity android:name=".activity.Client_modeActivity"></activity>
+        <activity
+            android:name=".activity.MapActivity"
+            android:label="@string/title_activity_mobile2">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MapActivity" />
+        </activity>
+
+        <service
+            android:name=".activity.GpsCheck"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="true" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <service
+            android:name=".Location.GPS_Service"
+            android:enabled="true"
+            android:exported="true"></service>
+        <service android:name=".service.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".service.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".proximity.PlaceIntentReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".Location.GPS_Service"
+            android:enabled="true"
+            android:exported="true"></service>
+
+    </application>
+</manifest>

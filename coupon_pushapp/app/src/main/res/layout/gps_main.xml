@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:onClick="linearOnclick"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="7.5"
+            android:gravity="center"
+            android:orientation="vertical">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/latitude"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="위도"
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal"
+                android:textColor="#000"
+                android:textColorHint="#c9c9c9" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/longitude"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="경도"
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal"
+                android:textColor="#000"
+                android:textColorHint="#c9c9c9" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="이름"
+                android:imeOptions="actionDone"
+                android:inputType="textAutoCorrect"
+                android:textColor="#000"
+                android:textColorHint="#c9c9c9" />
+            </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:id="@+id/settingRadius"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="반경 설정 Radius"
+                android:textAlignment="textEnd" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/addBtn"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:text="DB\n추가"
+                android:textColor="#000" />
+
+            <Button
+                android:id="@+id/nameSearchBtn"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:text="검색"
+                android:textColor="#000" />
+
+            <NumberPicker
+                android:id="@+id/radius"
+                android:layout_width="wrap_content"
+                android:layout_height="75dp"></NumberPicker>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/deleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DB삭제"
+            android:textColor="#000" />
+
+        <Button
+            android:id="@+id/selectAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DB목록"
+            android:textColor="#000" />
+
+        <Button
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재 GPS좌표"
+            android:textColor="#000" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/gps_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/layout1" />
+
+
+</LinearLayout>

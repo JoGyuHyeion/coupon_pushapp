@@ -1,0 +1,1 @@
+교촌마을 쿠폰 push service 받을수 있는 app
